@@ -27,6 +27,10 @@ export default {
       let tax = (price / 100) * vta;
       return price + tax;
     },
+
+    // addToCart :(){
+
+    // }
   },
 };
 </script>
@@ -57,7 +61,9 @@ export default {
             value="1"
             style="max-width: 80px"
           />
-          <button class="btn btn-primary" type="button">Add to Cart</button>
+          <router-link :to="{ name: 'CartView' }">
+            <button class="btn btn-primary" type="button">Add to Cart</button>
+          </router-link>
         </div>
         <div>
           <button class="btn btn-outline-secondary btn-sm" type="button">
