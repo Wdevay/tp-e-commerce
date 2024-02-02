@@ -44,7 +44,6 @@ export const useProductsStore = defineStore(STORE_NAME, {
       this.updateLocaleStorage();
     },
     updateProduct(product) {
-      console.log("update in store", product);
       const index = this.products.findIndex((el) => {
         return el.id === product.id;
       });
@@ -58,11 +57,9 @@ export const useProductsStore = defineStore(STORE_NAME, {
       this.updateLocaleStorage();
     },
     setEditProductMode(mode) {
-      console.log("mode Edition : ", mode);
       this.editProductMode = mode;
     },
     setProductToEditId(id) {
-      console.log("Product Id : ", id);
       this.productToEditId = id;
     },
     resetEditionMode() {

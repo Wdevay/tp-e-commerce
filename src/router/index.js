@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomePage from "../views/HomePage.vue";
 import CartPage from "../views/CartPage.vue";
+import LoginPage from "../views/LoginPage.vue";
 // Importer un fichier JSON contenant les routes du site
 import sitemap from "../data/routesList.json";
 
@@ -21,6 +22,11 @@ const routes = [
     name: "CartView",
     path: "/cart",
     component: CartPage,
+  },
+  {
+    name: "LoginPage",
+    path: "/login",
+    component: LoginPage,
   },
 ];
 
