@@ -1,54 +1,37 @@
-<script>
-import { mapState, mapActions } from "pinia";
+<script setup>
+import { toRefs } from "vue";
+import { useRouter } from "vue-router";
 import { useProductsStore } from "@/stores";
 
-export default {
-  name: "ProductDetails",
-  props: {
-    productId: {
-      type: [Number, String],
-      default: null,
-    },
+const props = defineProps({
+  productId: {
+    type: [Number, String],
+    default: null,
   },
-  // Récupérer le paramètre de route qui contient l'id de notre produit
-  // Récupérer le produit correspondant à l'id dans le paramètre de route
-  // en utilisant le store product
-  computed: {
-    ...mapState(useProductsStore, ["getProductById"], ["getProducts"]),
-    getCurrentProduct() {
-      return this.getProductById(this.productId);
-    },
-    vtaCalculation: () => (price, vta) => {
-      if (typeof price != "number") {
-        /* throw new Error('Parameter is not a number!') */
-        return "Error price is not a number";
-      }
-      let tax = (price / 100) * vta;
-      return price + tax;
-    },
+});
 
-    selectedProduct: () => {
-      return this.getProducts.find((object) => {
-        object.id === Number(route.params.id);
-      });
-    },
-  },
+const store = useProductsStore();
+const router = useRouter();
+const { productId } = toRefs(props);
+const currentProduct = store.getProductById(productId.value);
+const { addToCart } = store;
+console.log(productId);
+const vtaCalculation = (price, vta) => {
+  if (typeof price != "number") {
+    /* throw new Error('Parameter is not a number!') */
+    return "Error price is not a number";
+  }
+  let tax = (price / 100) * vta;
+  return price + tax;
+};
 
-  methods: {
-    ...mapActions(useProductsStore, ["addToCart"]),
-
-    addToCartAndPush: () => {
-      console.log("before selectedProduct");
-      this.selectedProduct();
-      console.log("before addToCart");
-      this.addToCart();
-      router.push({ name: "CartView" });
-    },
-  },
+const addToCartAndPush = () => {
+  addToCart(currentProduct);
+  router.push({ name: "CartView" });
 };
 </script>
 <template>
-  <section v-if="getCurrentProduct != null" class="container py-5">
+  <section v-if="currentProduct != null" class="container py-5">
     <article class="row">
       <section class="col-lg-6">
         <img
@@ -58,13 +41,12 @@ export default {
         />
       </section>
       <section class="col-lg-6">
-        <h2 class="fw-bold">{{ getCurrentProduct.name }}</h2>
-        <p class="text-muted">{{ getCurrentProduct.category }}</p>
-        <h3 class="my-4">{{ getCurrentProduct.price }}€ HT</h3>
+        <h2 class="fw-bold">{{ currentProduct.name }}</h2>
+        <p class="text-muted">{{ currentProduct.category }}</p>
+        <h3 class="my-4">{{ currentProduct.price }}€ HT</h3>
         <p class="text-muted">
-          tva :{{ getCurrentProduct.vta }}% -
-          {{ vtaCalculation(getCurrentProduct.price, getCurrentProduct.vta) }}€
-          TTC
+          tva :{{ currentProduct.vta }}% -
+          {{ vtaCalculation(currentProduct.price, currentProduct.vta) }}€ TTC
         </p>
         <p class="mb-4">A mini Description</p>
         <div class="d-flex gap-3 mb-4">
@@ -145,7 +127,7 @@ export default {
           aria-labelledby="description-tab"
         >
           <p class="mt-3">
-            {{ getCurrentProduct.description }}
+            {{ currentProduct.description }}
           </p>
         </div>
         <div

@@ -81,7 +81,7 @@ export default {
       </ul>
 
       <!-- Search Bar -->
-      <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+      <form class="search" role="search">
         <input
           type="search"
           class="form-control"
@@ -95,10 +95,10 @@ export default {
         <!-- Icon Cart -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
+          width="32"
+          height="32"
           fill="currentColor"
-          class="bi bi-cart-plus"
+          class="cart"
           viewBox="0 0 16 16"
         >
           <path
@@ -177,5 +177,18 @@ export default {
 }
 .router-link-active:hover {
   font-size: 1.5rem;
+}
+
+.search {
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  width: 30rem;
+  margin-right: 2rem;
+}
+
+.cart {
+  margin-right: 2rem;
+  color: #42b983;
 }
 </style>

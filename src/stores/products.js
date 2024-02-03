@@ -69,5 +69,10 @@ export const useProductsStore = defineStore(STORE_NAME, {
     addToCart(product) {
       this.cart.push(product);
     },
+    removeFromCart(productId) {
+      this.cart = this.cart.filter((object) => {
+        object.id != productId;
+      });
+    },
   },
 });
