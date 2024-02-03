@@ -1,5 +1,5 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useProductsStore } from "@/stores";
 
 export default {
@@ -14,7 +14,7 @@ export default {
   // Récupérer le produit correspondant à l'id dans le paramètre de route
   // en utilisant le store product
   computed: {
-    ...mapState(useProductsStore, ["getProductById"]),
+    ...mapState(useProductsStore, ["getProductById"], ["getProducts"]),
     getCurrentProduct() {
       return this.getProductById(this.productId);
     },
@@ -27,9 +27,23 @@ export default {
       return price + tax;
     },
 
-    // addToCart :(){
+    selectedProduct: () => {
+      return this.getProducts.find((object) => {
+        object.id === Number(route.params.id);
+      });
+    },
+  },
 
-    // }
+  methods: {
+    ...mapActions(useProductsStore, ["addToCart"]),
+
+    addToCartAndPush: () => {
+      console.log("before selectedProduct");
+      this.selectedProduct();
+      console.log("before addToCart");
+      this.addToCart();
+      router.push({ name: "CartView" });
+    },
   },
 };
 </script>
@@ -60,9 +74,13 @@ export default {
             value="1"
             style="max-width: 80px"
           />
-          <router-link :to="{ name: 'CartView' }">
-            <button class="btn btn-primary" type="button">Add to Cart</button>
-          </router-link>
+          <button
+            class="btn btn-primary"
+            type="button"
+            @click="addToCartAndPush"
+          >
+            Add to Cart
+          </button>
         </div>
         <div>
           <button class="btn btn-outline-secondary btn-sm" type="button">

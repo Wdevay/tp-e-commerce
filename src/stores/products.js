@@ -66,5 +66,8 @@ export const useProductsStore = defineStore(STORE_NAME, {
       this.productToEditId = null;
       this.editProductMode = false;
     },
+    addToCart(product) {
+      this.cart.push(product);
+    },
   },
 });
