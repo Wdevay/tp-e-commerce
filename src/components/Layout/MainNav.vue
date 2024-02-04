@@ -1,12 +1,17 @@
 <script>
 import { mapState } from "pinia";
-import { useAppStore } from "@/stores";
+import { useAppStore, useProductsStore } from "@/stores";
 import nav from "@/data/nav.json";
 import CategoryDetails from "../Category/CategoryDetails.vue";
 
 export default {
   name: "MainNav",
   components: { CategoryDetails },
+  data() {
+    return {
+      searchTerm: "",
+    };
+  },
   props: {
     navItems: {
       type: Object,
@@ -43,6 +48,15 @@ export default {
         }
         return true;
       },
+
+    // filteredProducts() {
+    //   return this.products.filter((product) => {
+    //     product.name.toLowerCase().includes(this.searchTerm.toLowerCase());
+    //   });
+    // },
+  },
+  methods: {
+    startSearch() {},
   },
 };
 </script>
@@ -82,16 +96,25 @@ export default {
         </li>
       </ul>
 
-      <CategoryDetails />
+      <CategoryDetails v-if="this.$route.path === '/products'" />
 
       <!-- Search Bar -->
       <form class="search" role="search">
         <input
-          type="search"
+          type="text"
           class="form-control"
-          placeholder="Search..."
+          placeholder="Enter search term"
           aria-label="Search"
+          v-model="searchTerm"
+          v-on:keyup.native.enter="
+            $router.pushWithQuery({ name: 'SearchPage', query: { q } })
+          "
         />
+        <!-- <ul>
+          <li v-for="product in filteredProducts" :key="product.id">
+            {{ product.name }}
+          </li>
+        </ul> -->
       </form>
       <!-- End Search Bar -->
 

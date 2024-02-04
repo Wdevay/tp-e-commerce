@@ -1,19 +1,42 @@
 [
-
-    {
-        "id": 1,
-        "name": "Biscuit",
-        "category": "Confiserie",
-        "description": "Des super Biscuit Trop bon",
-        "price": 1,
-        "vta": 20
-    },
-    {
-        "id": 2,
-        "name": "Rhum",
-        "category": "Boisson",
-        "description": "Y'a bon !",
-        "price": 10,
-        "vta": 20
-    }
+  {
+    "id": 1,
+    "name": "Biscuit",
+    "category": "Confectionery",
+    "description": "Des super Biscuit Trop bon",
+    "price": 1,
+    "vta": 20
+  },
+  {
+    "id": 2,
+    "name": "Rhum",
+    "category": "Beverages",
+    "description": "Y'a bon !",
+    "price": 10,
+    "vta": 20
+  },
+  {
+    "id": 3,
+    "name": "Drumstick",
+    "category": "Meat",
+    "description": "Y'a bon !",
+    "price": 30,
+    "vta": 20
+  },
+  {
+    "id": 4,
+    "name": "Eggplant",
+    "category": "Vegetables",
+    "description": "Y'a bon !",
+    "price": 5,
+    "vta": 20
+  },
+  {
+    "id": 5,
+    "name": "Eggplant",
+    "category": "Vegetables",
+    "description": "Y'a bon !",
+    "price": 5,
+    "vta": 20
+  }
 ]

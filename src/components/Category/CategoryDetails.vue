@@ -1,4 +1,13 @@
-<script setup></script>
+<script setup>
+import { useCategoryStore } from "../../stores/category";
+import categories from "@/data/categoryList.json";
+
+const { selectCategory } = useCategoryStore();
+const selectCategoryAndProducts = (category) => {
+  const list = selectCategory(category.name);
+  console.log(list);
+};
+</script>
 
 <template>
   <div class="dropdown">
@@ -11,11 +20,20 @@
       Categories
     </button>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">Viande</a></li>
-      <li><a class="dropdown-item" href="#">Légume</a></li>
-      <li><a class="dropdown-item" href="#">Boisson</a></li>
-      <li><a class="dropdown-item" href="#">Confiserie</a></li>
+      <li
+        v-for="(category, index) in categories"
+        :key="index"
+        :class="{ active: activeCategory === category }"
+        @click="selectCategoryAndProducts(category)"
+      >
+        {{ category.name }}
+      </li>
     </ul>
+    <div class="selected-products">
+      <div v-for="(product, index) in filteredProducts" :key="index">
+        {{ product.name }}
+      </div>
+    </div>
   </div>
 </template>
 

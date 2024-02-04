@@ -1,6 +1,7 @@
 <script>
-import { mapState, mapActions } from 'pinia'
-import { useProductsStore } from '../../stores'
+import { mapState, mapActions } from "pinia";
+import { useProductsStore } from "../../stores";
+// import categories from "@/data/categoryList.json";
 
 export default {
   name: "ProductForm",
@@ -12,11 +13,13 @@ export default {
   watch: {
     getProductToEditId(newValue, oldValue) {
       if (
-        this.getEditProductMode && newValue != null && !this.confirmEditMode ||
-        this.getEditProductMode && newValue != this.currentProductId
+        (this.getEditProductMode &&
+          newValue != null &&
+          !this.confirmEditMode) ||
+        (this.getEditProductMode && newValue != this.currentProductId)
       ) {
         // IMPORTER LE PRODUIT SELECTIONNÉ
-        const product = this.getProductById(this.getProductToEditId)
+        const product = this.getProductById(this.getProductToEditId);
         this.name = product.name;
         this.description = product.description;
         this.price = product.price;
@@ -25,7 +28,7 @@ export default {
         this.confirmEditMode = true;
         this.currentProductId = this.productToEditId;
       }
-    }
+    },
   },
   data() {
     return {
@@ -35,7 +38,7 @@ export default {
       vta: 20,
       category: "sweet",
       confirmEditMode: false,
-      currentProductId: null
+      currentProductId: null,
     };
   },
   props: {
@@ -59,11 +62,11 @@ export default {
           vta: this.vta,
           category: this.category,
         };
-        console.log("category", this.category)
+        console.log("category", this.category);
         /* this.$emit("updateProduct", product); */
-        this.updateProduct(product)
-        this.confirmEditMode = false
-        this.currentProductId = null
+        this.updateProduct(product);
+        this.confirmEditMode = false;
+        this.currentProductId = null;
       } else {
         const product = {
           id: Math.floor(Math.random() * Date.now()),
@@ -73,39 +76,39 @@ export default {
           vta: this.vta,
           category: this.category,
         };
-        this.addProduct(product)
+        this.addProduct(product);
       }
-      this.resetForm()
+      this.resetForm();
     },
     resetForm() {
-      this.name = null
-      this.description = null
-      this.price = 0
-      this.vta =  20
-      this.category = null
+      this.name = null;
+      this.description = null;
+      this.price = 0;
+      this.vta = 20;
+      this.category = null;
     },
     cancel() {
-      this.resetForm()
-      this.confirmEditMode = false
-      this.currentProductId = null
-      this.resetEditionMode()
+      this.resetForm();
+      this.confirmEditMode = false;
+      this.currentProductId = null;
+      this.resetEditionMode();
     },
     /* version avec Alias */
     ...mapActions(useProductsStore, {
       addProduct: "addProduct",
       updateProduct: "updateProduct",
-      resetEditionMode: "resetEditionMode"
-    })
+      resetEditionMode: "resetEditionMode",
+    }),
     /* version sans Alias */
     /* ...mapActions(useProductsStore, ["addProduct", "updateProduct"]) */
   },
   computed: {
     ...mapState(useProductsStore, [
       "getEditProductMode",
-      "getProductToEditId" ,
-      "getProductById"
+      "getProductToEditId",
+      "getProductById",
     ]),
-  }
+  },
 };
 </script>
 
@@ -156,6 +159,13 @@ export default {
       <div class="mb-3">
         <label for="category" class="form-label">Catégorie</label>
         <select id="category" class="form-select" v-model="category" required>
+          <!-- <option
+            v-for="category in categories"
+            :key="category.id"
+            :value="category.name"
+          >
+            {{ category.name }}
+          </option> -->
           <option value="meat">Viande</option>
           <option value="vegetable">Légume</option>
           <option value="drink">Boisson</option>
@@ -173,7 +183,7 @@ export default {
         >
         </textarea>
       </div>
-      
+
       <button
         class="btn"
         type="submit"
@@ -189,12 +199,7 @@ export default {
       >
         Annuler
       </button>
-      <button
-        v-else
-        class="btn btn-danger"
-        type="button"
-        @click="resetForm"
-      >
+      <button v-else class="btn btn-danger" type="button" @click="resetForm">
         Reset
       </button>
     </form>
