@@ -2,9 +2,11 @@
 import { mapState } from "pinia";
 import { useAppStore } from "@/stores";
 import nav from "@/data/nav.json";
+import CategoryDetails from "../Category/CategoryDetails.vue";
 
 export default {
   name: "MainNav",
+  components: { CategoryDetails },
   props: {
     navItems: {
       type: Object,
@@ -79,6 +81,8 @@ export default {
           </router-link>
         </li>
       </ul>
+
+      <CategoryDetails />
 
       <!-- Search Bar -->
       <form class="search" role="search">
@@ -178,7 +182,6 @@ export default {
 .router-link-active:hover {
   font-size: 1.5rem;
 }
-
 .search {
   display: flex;
   justify-content: center; /* 水平居中 */
