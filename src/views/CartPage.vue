@@ -27,7 +27,11 @@ const deleteFromCart = (id) => {
     <div class="cart-items" v-else="">
       <div class="cart-item" v-for="item in store.cart" :key="item.id">
         <div class="item-details">
-          <span>{{ item.name }}</span>
+          <span
+            @click="router.push({ name: 'ProductListPage' })"
+            class="cart-item-name"
+            >{{ item.name }}</span
+          >
           <span>{{ item.category }}</span>
           <span>{{ item.price }}</span>
           <span>
@@ -64,5 +68,10 @@ const deleteFromCart = (id) => {
   background-color: #2c8d41;
   box-shadow: 0px 0px 2px 2px #2c8d41;
   transition: 0.7s;
+}
+
+.cart-item-name:hover {
+  cursor: pointer;
+  color: #ffbf00;
 }
 </style>
