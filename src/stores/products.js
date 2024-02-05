@@ -67,12 +67,15 @@ export const useProductsStore = defineStore(STORE_NAME, {
       this.editProductMode = false;
     },
     addToCart(product) {
-      this.cart.push(product);
+      const productToCart = Object.assign({}, product);
+      productToCart.uuid = Math.floor(Math.random() * Date.now());
+      this.cart.push(productToCart);
     },
-    removeFromCart(productId) {
-      this.cart = this.cart.filter((object) => {
-        object.id != productId;
+    removeFromCart(productUuid) {
+      this.cart = this.cart.filter((el) => {
+        return el.uuid != productUuid;
       });
+      console.log(this.cart);
     },
   },
 });

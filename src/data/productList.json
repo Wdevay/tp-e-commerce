@@ -10,7 +10,7 @@
   {
     "id": 2,
     "name": "Rhum",
-    "category": "Beverages",
+    "category": "Beverage",
     "description": "Y'a bon !",
     "price": 10,
     "vta": 20
@@ -26,15 +26,15 @@
   {
     "id": 4,
     "name": "Eggplant",
-    "category": "Vegetables",
+    "category": "Vegetable",
     "description": "Y'a bon !",
     "price": 5,
     "vta": 20
   },
   {
     "id": 5,
-    "name": "Eggplant",
-    "category": "Vegetables",
+    "name": "Plant",
+    "category": "Vegetable",
     "description": "Y'a bon !",
     "price": 5,
     "vta": 20

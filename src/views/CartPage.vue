@@ -18,25 +18,27 @@ const deleteFromCart = (id) => {
 </script>
 
 <template>
-  <p>Items in Cart: {{ store.cart.length }}</p>
-  <button @click="router.push({ name: 'Category' })">Back to category</button>
-  <div v-if="!store.cart.length" style="text-align: center">
-    <h1>Empty Cart...</h1>
-  </div>
-  <div class="cart-items" v-else="">
-    <div class="cart-item" v-for="item in store.cart" :key="item.id">
-      <div class="item-details">
-        <span>{{ item.name }}</span>
-        <span>{{ item.category }}</span>
-        <span>{{ item.price }}</span>
-        <span>
-          tva :{{ item.vta }}% - {{ vtaCalculation(item.price, item.vta) }}€
-          TTC</span
-        >
-        <button @click="deleteFromCart(item.id)" class="btn">Remove</button>
+  <section>
+    <p>Items in Cart: {{ store.cart.length }}</p>
+    <button @click="router.push({ name: 'Category' })">Back to category</button>
+    <div v-if="!store.cart.length" style="text-align: center">
+      <h1>Empty Cart...</h1>
+    </div>
+    <div class="cart-items" v-else="">
+      <div class="cart-item" v-for="item in store.cart" :key="item.id">
+        <div class="item-details">
+          <span>{{ item.name }}</span>
+          <span>{{ item.category }}</span>
+          <span>{{ item.price }}</span>
+          <span>
+            tva :{{ item.vta }}% - {{ vtaCalculation(item.price, item.vta) }}€
+            TTC</span
+          >
+          <button @click="deleteFromCart(item.uuid)" class="btn">Remove</button>
+        </div>
       </div>
     </div>
-  </div>
+  </section>
 </template>
 
 <style scoped>

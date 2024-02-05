@@ -50,6 +50,9 @@ export default {
       },
 
     // filteredProducts() {
+    //   if (!this.searchTerm) {
+    //     return this.products;
+    // }
     //   return this.products.filter((product) => {
     //     product.name.toLowerCase().includes(this.searchTerm.toLowerCase());
     //   });
@@ -57,6 +60,16 @@ export default {
   },
   methods: {
     startSearch() {},
+    pushWithQuery() {
+      console.log(this.$route.query);
+      this.$router.push({
+        name: "SearchPage",
+        query: {
+          ...this.$route.query,
+          ...this.searchTerm,
+        },
+      });
+    },
   },
 };
 </script>
@@ -99,16 +112,14 @@ export default {
       <CategoryDetails v-if="this.$route.path === '/products'" />
 
       <!-- Search Bar -->
-      <form class="search" role="search">
+      <!-- .prevent表示提交以后不刷新页面,submit点击默认行为是提交表单,这里并不需要它提交,只需要执行pushWithQuery方法,故阻止为好。 -->
+      <form @submit.prevent="pushWithQuery" class="search" role="search">
         <input
           type="text"
           class="form-control"
           placeholder="Enter search term"
           aria-label="Search"
           v-model="searchTerm"
-          v-on:keyup.native.enter="
-            $router.pushWithQuery({ name: 'SearchPage', query: { q } })
-          "
         />
         <!-- <ul>
           <li v-for="product in filteredProducts" :key="product.id">

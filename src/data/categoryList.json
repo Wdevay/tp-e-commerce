@@ -1,6 +1,6 @@
 [
   { "id": 1, "name": "Meat" },
-  { "id": 2, "name": "Beverages" },
-  { "id": 3, "name": "Vegetables" },
+  { "id": 2, "name": "Beverage" },
+  { "id": 3, "name": "Vegetable" },
   { "id": 4, "name": "Confectionery" }
 ]
