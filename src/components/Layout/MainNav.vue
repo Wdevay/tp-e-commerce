@@ -136,11 +136,6 @@ export default {
             {{ category.name }}
           </li>
         </ul>
-        <!-- <div class="selected-products">
-          <div v-for="(product, index) in getFilteredProducts" :key="index">
-            {{ product.name }}
-          </div>
-        </div> -->
       </div>
       <!-- End Category Dropdown -->
 
