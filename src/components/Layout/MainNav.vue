@@ -12,6 +12,13 @@ export default {
       searchTerm: "",
     };
   },
+  watch: {
+    searchTerm(oldTerm, newTerm) {
+      if (oldTerm != newTerm) {
+        this.runSearchMode;
+      }
+    },
+  },
   props: {
     navItems: {
       type: Object,
@@ -52,14 +59,14 @@ export default {
   },
   methods: {
     ...mapActions(useProductsStore, ["setSearchTerms"]),
-    pushWithQuery() {
-      if (this.$route.path !== "/search")
-        this.$router.push({
-          name: "SearchPage",
-          // query: {
-          //   searchTerm: this.searchTerm,
-          // },
-        });
+    runSearchMode() {
+      this.setSearchTerms(this.searchTerm);
+      this.$router.push({
+        name: "SearchPage",
+        // query: {
+        //   searchTerm: this.searchTerm,
+        // },
+      });
     },
   },
 };
@@ -103,15 +110,15 @@ export default {
       <CategoryDetails v-if="this.$route.path === '/products'" />
 
       <!-- Search Bar -->
-      <!-- .prevent表示提交以后不刷新页面,submit点击默认行为是提交表单,这里并不需要它提交,只需要执行pushWithQuery方法,故阻止为好。 -->
-      <form @submit.prevent="pushWithQuery()" class="search" role="search">
+      <!-- .prevent表示提交以后不刷新页面,submit点击默认行为是提交表单,这里并不需要它提交,只需要执行runSearchMode方法,故阻止为好。 -->
+      <form @submit.prevent="runSearchMode()" class="search" role="search">
         <input
           type="text"
           class="form-control"
           placeholder="Enter search term"
           aria-label="Search"
-          :value="searchTerm"
-          @input="(event) => setSearchTerms(event.target.value)"
+          v-model="searchTerm"
+          @input="() => runSearchMode()"
         />
       </form>
       <!-- End Search Bar -->

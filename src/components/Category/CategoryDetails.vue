@@ -1,8 +1,10 @@
 <script setup>
-import { useCategoryStore } from "../../stores/category";
+import { useCategoryStore } from "@/stores/category";
+import { useProductsStore } from "@/stores/products";
 import categories from "@/data/categoryList.json";
 
 const { selectCategory } = useCategoryStore();
+const { getFilteredProducts } = useProductsStore();
 const selectCategoryAndProducts = (category) => {
   const list = selectCategory(category.name);
   console.log(list);
@@ -30,7 +32,7 @@ const selectCategoryAndProducts = (category) => {
       </li>
     </ul>
     <div class="selected-products">
-      <div v-for="(product, index) in filteredProducts" :key="index">
+      <div v-for="(product, index) in getFilteredProducts" :key="index">
         {{ product.name }}
       </div>
     </div>

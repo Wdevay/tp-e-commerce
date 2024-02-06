@@ -2,7 +2,7 @@
 // import { useRouter } from "vue-router";
 import { useProductsStore } from "../stores/products";
 
-const { filteredProducts } = useProductsStore();
+const { getFilteredProducts } = useProductsStore();
 const vtaCalculation = (price, vta) => {
   if (typeof price != "number") {
     /* throw new Error('Parameter is not a number!') */
@@ -14,7 +14,7 @@ const vtaCalculation = (price, vta) => {
 </script>
 <template>
   <section>
-    <ul v-for="product in filteredProducts()" :key="product.id">
+    <ul v-for="product in getFilteredProducts" :key="product.id">
       <div class="item_details">
         <span>{{ product.name }}</span>
         <span>{{ product.category }}</span>
