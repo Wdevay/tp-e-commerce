@@ -30,5 +30,11 @@
     "name": "SearchPage",
     "path": "/search",
     "component": "SearchPage.vue"
+  },
+  {
+    "uuid": "category_page",
+    "name": "CategoryPage",
+    "path": "/category",
+    "component": "CategoryPage.vue"
   }
 ]

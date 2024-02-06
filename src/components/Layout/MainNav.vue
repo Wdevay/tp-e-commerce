@@ -1,12 +1,15 @@
 <script>
 import { mapState, mapActions } from "pinia";
 import { useAppStore, useProductsStore } from "@/stores";
+import { useCategoryStore } from "../../stores/category";
 import nav from "@/data/nav.json";
-import CategoryDetails from "../Category/CategoryDetails.vue";
+import categories from "@/data/categoryList.json";
+
+// import CategoryDetails from "../Category/CategoryDetails.vue";
 
 export default {
   name: "MainNav",
-  components: { CategoryDetails },
+  // components: { CategoryDetails },
   data() {
     return {
       searchTerm: "",
@@ -44,7 +47,8 @@ export default {
   },
   computed: {
     ...mapState(useAppStore, ["getIsAuthenticated", "getIsAdmin"]),
-    ...mapState(useProductsStore, ["getSearchTerm"]),
+    ...mapState(useProductsStore, ["getSearchTerm", "getFilteredProducts"]),
+    ...mapState(useCategoryStore, ["selectCategory"]),
     checkDisplay:
       () =>
       (link, isAuth = false, isAdmin = false) => {
@@ -56,7 +60,12 @@ export default {
         }
         return true;
       },
+    selectCategoryAndProducts: (category) => {
+      const list = selectCategory(category.name);
+      console.log(list);
+    },
   },
+
   methods: {
     ...mapActions(useProductsStore, ["setSearchTerms"]),
     runSearchMode() {
@@ -74,7 +83,7 @@ export default {
 
 <template>
   <div class="container">
-    <div
+    <template
       class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start"
     >
       <a
@@ -107,7 +116,34 @@ export default {
         </li>
       </ul>
 
-      <CategoryDetails v-if="this.$route.path === '/products'" />
+      <!-- Category Dropdown -->
+      <div v-if="this.$route.path === '/products'" />
+      <div class="dropdown">
+        <button
+          class="btn dropdown-toggle"
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Categories
+        </button>
+        <ul class="dropdown-menu">
+          <li
+            v-for="(category, index) in categories"
+            :key="index"
+            :class="{ active: activeCategory === category }"
+            @click="selectCategoryAndProducts(category)"
+          >
+            {{ category.name }}
+          </li>
+        </ul>
+        <div class="selected-products">
+          <div v-for="(product, index) in getFilteredProducts" :key="index">
+            {{ product.name }}
+          </div>
+        </div>
+      </div>
+      <!-- End Category Dropdown -->
 
       <!-- Search Bar -->
       <!-- .prevent表示提交以后不刷新页面,submit点击默认行为是提交表单,这里并不需要它提交,只需要执行runSearchMode方法,故阻止为好。 -->
@@ -123,8 +159,8 @@ export default {
       </form>
       <!-- End Search Bar -->
 
+      <!-- Icon Cart -->
       <router-link :to="{ name: 'CartView' }">
-        <!-- Icon Cart -->
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="32"
@@ -150,50 +186,49 @@ export default {
       >
         Connexion
       </router-link>
-
-      <div
-        v-if="showUserNav === true && getIsAuthenticated === true"
-        class="dropdown text-end"
+    </template>
+    <div
+      v-if="showUserNav === true && getIsAuthenticated === true"
+      class="dropdown text-end"
+    >
+      <a
+        href="#"
+        class="d-block link-body-emphasis text-decoration-none dropdown-toggle show"
+        data-bs-toggle="dropdown"
+        aria-expanded="true"
       >
-        <a
-          href="#"
-          class="d-block link-body-emphasis text-decoration-none dropdown-toggle show"
-          data-bs-toggle="dropdown"
-          aria-expanded="true"
-        >
-          <img
-            src="https://github.com/mdo.png"
-            alt="mdo"
-            width="32"
-            height="32"
-            class="rounded-circle"
-          />
-        </a>
-        <ul
-          class="dropdown-menu text-small"
-          data-popper-placement="bottom-end"
-          style="
-            position: absolute;
-            inset: 0px 0px auto auto;
-            margin: 0px;
-            transform: translate(0px, 34px);
-          "
-        >
-          <li v-for="(item, index) in userNavItems.items" :key="index">
-            <router-link
-              v-if="checkDisplay(item, getIsAuthenticated, getIsAdmin)"
-              :to="item.link ? item.link : '#'"
-              :class="item.class ? item.class : null"
-              :target="item.target ? item.target : '_self'"
-              class="dropdown-item"
-            >
-              {{ item.name ? item.name : "link" }}
-            </router-link>
-          </li>
-          <li><hr class="dropdown-divider" /></li>
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
-        </ul>
-      </div>
+        <img
+          src="https://github.com/mdo.png"
+          alt="mdo"
+          width="32"
+          height="32"
+          class="rounded-circle"
+        />
+      </a>
+      <ul
+        class="dropdown-menu text-small"
+        data-popper-placement="bottom-end"
+        style="
+          position: absolute;
+          inset: 0px 0px auto auto;
+          margin: 0px;
+          transform: translate(0px, 34px);
+        "
+      >
+        <li v-for="(item, index) in userNavItems.items" :key="index">
+          <router-link
+            v-if="checkDisplay(item, getIsAuthenticated, getIsAdmin)"
+            :to="item.link ? item.link : '#'"
+            :class="item.class ? item.class : null"
+            :target="item.target ? item.target : '_self'"
+            class="dropdown-item"
+          >
+            {{ item.name ? item.name : "link" }}
+          </router-link>
+        </li>
+        <li><hr class="dropdown-divider" /></li>
+        <li><a class="dropdown-item" href="#">Sign out</a></li>
+      </ul>
     </div>
   </div>
 </template>
@@ -214,12 +249,16 @@ export default {
   display: flex;
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
-  width: 30rem;
+  width: 20rem;
   margin-right: 2rem;
 }
 
 .cart {
   margin-right: 2rem;
   color: #42b983;
+}
+
+.dropdown {
+  margin-right: 10rem;
 }
 </style>
