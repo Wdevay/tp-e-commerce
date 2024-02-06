@@ -5,14 +5,12 @@ import { useCategoryStore } from "../../stores/category";
 import nav from "@/data/nav.json";
 import categories from "@/data/categoryList.json";
 
-// import CategoryDetails from "../Category/CategoryDetails.vue";
-
 export default {
   name: "MainNav",
-  // components: { CategoryDetails },
   data() {
     return {
       searchTerm: "",
+      categories,
     };
   },
   watch: {
@@ -61,6 +59,7 @@ export default {
         return true;
       },
     selectCategoryAndProducts: (category) => {
+      console.log(categories);
       const list = selectCategory(category.name);
       console.log(list);
     },
@@ -137,11 +136,11 @@ export default {
             {{ category.name }}
           </li>
         </ul>
-        <div class="selected-products">
+        <!-- <div class="selected-products">
           <div v-for="(product, index) in getFilteredProducts" :key="index">
             {{ product.name }}
           </div>
-        </div>
+        </div> -->
       </div>
       <!-- End Category Dropdown -->
 

@@ -1,8 +1,9 @@
 <script setup>
-// import { useRouter } from "vue-router";
+import { storeToRefs } from "pinia";
 import { useProductsStore } from "../stores/products";
 
-const { getFilteredProducts } = useProductsStore();
+// In order to extract properties from the store while keeping its reactivity, you need to use storeToRefs(). It will create refs for every reactive property. This is useful when you are only using state from the store but not calling any action.
+const { getFilteredProducts } = storeToRefs(useProductsStore());
 const vtaCalculation = (price, vta) => {
   if (typeof price != "number") {
     /* throw new Error('Parameter is not a number!') */
