@@ -1,5 +1,5 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapActions } from "pinia";
 import { useAppStore, useProductsStore } from "@/stores";
 import nav from "@/data/nav.json";
 import CategoryDetails from "../Category/CategoryDetails.vue";
@@ -37,6 +37,7 @@ export default {
   },
   computed: {
     ...mapState(useAppStore, ["getIsAuthenticated", "getIsAdmin"]),
+    ...mapState(useProductsStore, ["getSearchTerm"]),
     checkDisplay:
       () =>
       (link, isAuth = false, isAdmin = false) => {
@@ -48,27 +49,17 @@ export default {
         }
         return true;
       },
-
-    // filteredProducts() {
-    //   if (!this.searchTerm) {
-    //     return this.products;
-    // }
-    //   return this.products.filter((product) => {
-    //     product.name.toLowerCase().includes(this.searchTerm.toLowerCase());
-    //   });
-    // },
   },
   methods: {
-    startSearch() {},
+    ...mapActions(useProductsStore, ["setSearchTerms"]),
     pushWithQuery() {
-      console.log(this.$route.query);
-      this.$router.push({
-        name: "SearchPage",
-        query: {
-          ...this.$route.query,
-          ...this.searchTerm,
-        },
-      });
+      if (this.$route.path !== "/search")
+        this.$router.push({
+          name: "SearchPage",
+          // query: {
+          //   searchTerm: this.searchTerm,
+          // },
+        });
     },
   },
 };
@@ -113,19 +104,15 @@ export default {
 
       <!-- Search Bar -->
       <!-- .prevent表示提交以后不刷新页面,submit点击默认行为是提交表单,这里并不需要它提交,只需要执行pushWithQuery方法,故阻止为好。 -->
-      <form @submit.prevent="pushWithQuery" class="search" role="search">
+      <form @submit.prevent="pushWithQuery()" class="search" role="search">
         <input
           type="text"
           class="form-control"
           placeholder="Enter search term"
           aria-label="Search"
-          v-model="searchTerm"
+          :value="searchTerm"
+          @input="(event) => setSearchTerms(event.target.value)"
         />
-        <!-- <ul>
-          <li v-for="product in filteredProducts" :key="product.id">
-            {{ product.name }}
-          </li>
-        </ul> -->
       </form>
       <!-- End Search Bar -->
 

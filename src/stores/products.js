@@ -16,10 +16,11 @@ const getCurrentState = () => {
 export const useProductsStore = defineStore(STORE_NAME, {
   state: () => {
     return {
-      products: getCurrentState(),
+      productToEditId: getCurrentState(),
       editProductMode: false,
       productToEditId: null,
       cart: [],
+      searchTerm: "",
     };
   },
   getters: {
@@ -31,6 +32,7 @@ export const useProductsStore = defineStore(STORE_NAME, {
       console.log(state.products.find((product) => product.id == id));
       return state.products.find((product) => product.id == id);
     },
+    getSearchTerm: (state) => state.searchTerm,
   },
   actions: {
     updateLocaleStorage() {
@@ -67,8 +69,8 @@ export const useProductsStore = defineStore(STORE_NAME, {
       this.editProductMode = false;
     },
     addToCart(product) {
-      const productToCart = Object.assign({}, product);
-      productToCart.uuid = Math.floor(Math.random() * Date.now());
+      const uuid = Math.floor(Math.random() * Date.now());
+      const productToCart = { ...product, uuid };
       this.cart.push(productToCart);
     },
     removeFromCart(productUuid) {
@@ -76,6 +78,20 @@ export const useProductsStore = defineStore(STORE_NAME, {
         return el.uuid != productUuid;
       });
       console.log(this.cart);
+    },
+    setSearchTerm(searchTerm) {
+      console.log(`setSearchTerm ${searchTerm}`);
+      this.searchTerm = searchTerm;
+    },
+    filteredProducts() {
+      if (this.searchTerm.length == 0) {
+        return this.products;
+      }
+      return this.products.filter((product) => {
+        return product.name
+          .toLowerCase()
+          .includes(this.searchTerm.toLowerCase());
+      });
     },
   },
 });
