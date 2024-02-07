@@ -119,6 +119,7 @@ export default {
       <div v-if="this.$route.path === '/products'" />
       <div class="dropdown">
         <button
+          id="dropdown-toggle"
           class="btn dropdown-toggle"
           type="button"
           data-bs-toggle="dropdown"
@@ -231,6 +232,9 @@ export default {
 * {
   transition: all 0.3s ease-in-out;
 }
+.container {
+  display: flex;
+}
 .router-link-active {
   font-weight: bold;
   font-size: 1.25rem;
@@ -244,15 +248,12 @@ export default {
   justify-content: center; /* 水平居中 */
   align-items: center; /* 垂直居中 */
   width: 20rem;
-  margin-right: 2rem;
+  margin-left: 15rem;
 }
 
 .cart {
+  margin-left: 2rem;
   margin-right: 2rem;
   color: #42b983;
-}
-
-.dropdown {
-  margin-right: 10rem;
 }
 </style>
