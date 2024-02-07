@@ -59,9 +59,9 @@ export default {
         return true;
       },
     selectCategoryAndProducts: (category) => {
-      console.log(categories);
+      // console.log(categories);
       const list = selectCategory(category.name);
-      console.log(list);
+      // console.log(list);
     },
   },
 
@@ -249,8 +249,8 @@ export default {
   align-items: center; /* 垂直居中 */
   width: 20rem;
   margin-left: 15rem;
+  border: none;
 }
-
 .cart {
   margin-left: 2rem;
   margin-right: 2rem;
