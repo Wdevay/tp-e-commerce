@@ -26,9 +26,9 @@ export default {
     </router-view>
 
     <template #footer>
-      <router-link to="/login">
+      <!-- <router-link to="/login">
         Login
-      </router-link>
+      </router-link> -->
     </template>
   </main-layout>
 </template>

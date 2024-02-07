@@ -131,8 +131,7 @@ export default {
         </button>
         <ul class="dropdown-menu">
           <li
-            v-for="(category, index) in categories"
-            :key="index"
+            v-for="(category) in categories"
             :class="{ active: activeCategory === category }"
             @click="selectCategoryAndProducts(category)"
           >

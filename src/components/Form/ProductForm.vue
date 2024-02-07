@@ -1,7 +1,9 @@
 <script>
 import { mapState, mapActions } from "pinia";
 import { useProductsStore } from "../../stores";
-// import categories from "@/data/categoryList.json";
+
+
+
 
 export default {
   name: "ProductForm",

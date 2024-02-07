@@ -3,9 +3,11 @@ import { defineStore } from "pinia";
 /* import products from "../data/productList.json" */
 /* @ est un raccourcis pour partir du dossier src */
 import products from "@/data/productList.json";
+import {ref} from 'vue';
 
 const STORE_NAME = "products";
 const STORE_LOCALE_STORAGE_KEY = "products";
+
 
 const getDefaultState = () => products;
 const getCurrentState = () => {
@@ -14,6 +16,7 @@ const getCurrentState = () => {
 };
 
 export const useProductsStore = defineStore(STORE_NAME, {
+
   state: () => {
     return {
       products: getCurrentState(),
@@ -23,6 +26,7 @@ export const useProductsStore = defineStore(STORE_NAME, {
       searchTerm: "",
     };
   },
+
   getters: {
     getProducts: (state) => state.products,
     getEditProductMode: (state) => state.editProductMode,
@@ -34,7 +38,7 @@ export const useProductsStore = defineStore(STORE_NAME, {
     },
     getSearchTerm: (state) => state.searchTerm,
     getFilteredProducts: (state) => {
-      console.log("seqrchhh : ", state.searchTerm);
+      console.log("searchhh : ", state.searchTerm);
       if (state.searchTerm.length == 0) {
         return state.products;
       }
@@ -45,6 +49,7 @@ export const useProductsStore = defineStore(STORE_NAME, {
       });
     },
   },
+
   actions: {
     updateLocaleStorage() {
       localStorage.setItem(

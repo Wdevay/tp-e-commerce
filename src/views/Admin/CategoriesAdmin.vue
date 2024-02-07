@@ -1,36 +1,24 @@
 <script setup>
-import {ref, onMounted, watch} from 'vue'
-
-const categories = ref ([])
-
-const input_category = ref(null)
-
-// const todos_asc = computed(() => todos.value.sort((a,b) => b.createdAt - a.createdAt))
-
-const addCategory = () => {
-  if (input_category.value.trim() === '' ){
-    return
-  }
-  categories.value.push({
-    id: Math.floor(Math.random() * Date.now()),
-    category: input_category.value,
-  })
-  input_category.value = null
-}
-
-const removeCategory = (category) => {
-  categories.value = categories.value.filter(t=> t !== category)
-}
-
-watch(categories, (newVal) => {
-  localStorage.setItem('categories',JSON.stringify(newVal))
-})
+import {ref, onMounted, computed, watch } from "vue";
+import { useCategoryStore } from "@/stores/category";
+import { storeToRefs } from 'pinia';
 
 
 
-onMounted(() => {
-  categories.value = JSON.parse(localStorage.getItem('categories')) || []
-})
+const storage = useCategoryStore()
+
+const { categories, input_category } = storeToRefs(storage)
+const { addCategory, removeCategory, updateLocaleStorage } = storage
+
+
+// watch(cate.value, (newVal) => {
+//   localStorage.setItem('categories',JSON.stringify(newVal))
+// })
+
+
+// onMounted(() => {
+//   cate.value = JSON.parse(localStorage.getItem('categories')) || []
+// })
 
 
 </script>
@@ -43,11 +31,11 @@ onMounted(() => {
       <form @submit.prevent="addCategory">
         <h3>Ajouter une nouvelle catégorie</h3>
         <input 
-        type="text" 
-        placeholder="ex : vegetable"
-        v-model="input_category"/>
-
-      <input type="submit" value="Add Category"/>
+			type="text" 
+			placeholder="ex : vegetable"
+			v-model="input_category"
+		/>
+      	<input type="submit" value="Ajouter catégorie" @click="updateLocaleStorage"/>
       </form>
     </section>
 
@@ -55,16 +43,14 @@ onMounted(() => {
     <h3>Liste des catégories</h3>
     <div class="list">
 
-      <div v-for="category in categories">
+      <div class="categories-item" v-for="category in categories">
         
-        <span>{{ category.id }}</span>
-
         <div class="category-name">
-          <input type="text" v-model="category.category"/>
+          <input type="text" v-model="category.name" @keypress="updateLocaleStorage"/>
         </div>
 
         <div class="actions">
-          <button class="btn btn-danger" @click="removeCategory(category)">Delete</button>
+          <button class="delete" @click="removeCategory(category) && updateLocaleStorage">Delete</button>
         </div>
 
       </div>
@@ -76,11 +62,27 @@ onMounted(() => {
 </template>
 
 <style scoped>
+
 * {
+	--primary: #ffa801;
+	--business: #0fbcf9;
+	--personal: var(--primary);
+	--light: #EEE;
+	--grey: #888;
+	--dark: #313154;
+	--dang: #ff5b57;
+
+	--shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+	--business-glow: 0px 0px 4px rgba(rgba(15, 188, 249,0.75));
+	--personal-glow: 0px 0px 4px rgba(rgba(255, 168, 1,0.75));
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
 	font-family: 'montserrat', sans-serif;
+}
+template {
+	display: flex;
 }
 
 input:not([type="radio"]):not([type="checkbox"]), button {
@@ -92,8 +94,8 @@ input:not([type="radio"]):not([type="checkbox"]), button {
 }
 
 body {
-	background: var(--light);
-	color: var(--dark);
+	background: #EEE;
+	color: #313154;
 }
 
 section {
@@ -104,14 +106,14 @@ section {
 }
 
 h3 {
-	color: var(--dark);
+	color: #313154;
 	font-size: 1rem;
 	font-weight: 400;
 	margin-bottom: 0.5rem;
 }
 
 h4 {
-	color: var(--grey);
+	color: #888;
 	font-size: 0.875rem;
 	font-weight: 700;
 	margin-bottom: 0.5rem;
@@ -123,10 +125,10 @@ h4 {
 	width: 100%;
 	font-size: 1.125rem;
 	padding: 1rem 1.5rem;
-	color: var(--dark);
+	color: #313154;
 	background-color: #FFF;
 	border-radius: 0.5rem;
-	box-shadow: var(--shadow);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	margin-bottom: 1.5rem;
 }
 
@@ -145,69 +147,26 @@ h4 {
 	padding: 1.5rem;
 	background-color: #FFF;
 	border-radius: 0.5rem;
-	box-shadow: var(--shadow);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	cursor: pointer;
 }
 
-input[type="radio"],
-input[type="checkbox"] {
-	display: none;
-}
-
-.bubble {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 20px;
-	height: 20px;
-	border-radius: 50%;
-	border: 2px solid var(--business);
-	box-shadow: var(--business-glow);
-}
-
-.bubble.personal {
-	border-color: var(--personal);
-	box-shadow: var(--personal-glow);
-}
-
-.bubble::after {
-	content: "";
-	display: block;
-	opacity: 0;
-	width: 0px;
-	height: 0px;
-	background-color: var(--business);
-	box-shadow: var(--business-glow);
-	border-radius: 50%;
-	transition: 0.2s ease-in-out;
-}
-
-.bubble.personal::after {
-	background-color: var(--personal);
-	box-shadow: var(--personal-glow);
-}
-
-input:checked ~ .bubble::after {
-	width: 10px;
-	height: 10px;
-	opacity: 1;
-}
 
 .create-categories .options label div {
-	color: var(--dark);
+	color: #313154;
 	font-size: 1.125rem;
 	margin-top: 1rem;
 }
 
 .create-categories input[type="submit"] {
 	display: block;
-	width: 100%;
+	/* width: 20%; */
 	font-size: 1.125rem;
-	padding: 1rem 1.5rem;
+	padding: 0.75rem 1.25rem;
 	color: #FFF;
-	background-color: var(--primary);
+	background-color: #0fbcf9;
 	border-radius: 0.5rem;
-	box-shadow: var(--personal-glow);
+	box-shadow: 0px 0px 4px rgba(rgba(255, 168, 1,0.75));
 	cursor: pointer;
 	transition: 0.2s ease-in-out;
 }
@@ -220,28 +179,23 @@ input:checked ~ .bubble::after {
 	margin: 1rem 0;
 } 
 
-.categories-list .todo-item {
+.categories-list .categories-item {
 	display: flex;
 	align-items: center;
 	background-color: #FFF;
 	padding: 1rem;
 	border-radius: 0.5rem;
-	box-shadow: var(--shadow);
+	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 	margin-bottom: 1rem;
 }
 
-.categories-item label {
-	display: block;
-	margin-right: 1rem;
-	cursor: pointer;
-}
 
-.categories-item .categories-content {
+.categories-item .category-name {
 	flex: 1 1 0%;
 }
 
-.categories-item .categories-content input {
-	color: var(--dark);
+.categories-item .category-name input {
+	color: #313154;
 	font-size: 1.125rem;
 }
 
@@ -265,11 +219,11 @@ input:checked ~ .bubble::after {
 
 .categories-item .actions .edit {
 	margin-right: 0.5rem;
-	background-color: var(--primary);
+	background-color: #0fbcf9;
 }
 
 .categories-item .actions .delete {
-	background-color: var(--danger);
+	background-color: #ff5b57;
 }
 
 
