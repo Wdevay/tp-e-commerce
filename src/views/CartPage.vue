@@ -20,9 +20,7 @@ const deleteFromCart = (id) => {
 <template>
   <section>
     <p>Items in Cart: {{ store.cart.length }}</p>
-    <button @click="router.push({ name: 'CategoryPage' })">
-      Back to category
-    </button>
+    <button class="btn btn-lg btn-success text-center" @click="router.push({ name: 'CategoriesPage' })">Back to category</button>
     <div v-if="!store.cart.length" style="text-align: center">
       <h1>Empty Cart...</h1>
     </div>

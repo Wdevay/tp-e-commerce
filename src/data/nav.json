@@ -13,18 +13,14 @@
             },
             {
                 "name": "Products",
-                "link": "/admin/products",
+                "link": "/products",
                 "target": "_self",
-                "class": "link-body-emphasis",
-                "meta": { 
-                    "requiresAuth": true,
-                    "isAdmin": true
-                }
+                "class": "link-body-emphasis"
             }
         ]
     },
     "userNav" : {
-        "name": "PublicMainNav",
+        "name": "userNav",
         "requiresAuth": true,
         "isAdmin": false,
         "items": [

@@ -102,17 +102,19 @@ export default {
       <ul
         class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
       >
-        <li v-for="(item, index) in navItems.items" :key="index">
-          <router-link
-            v-if="checkDisplay(item, getIsAuthenticated, getIsAdmin)"
-            :to="item.link ? item.link : '#'"
-            :class="item.class ? item.class : null"
-            :target="item.target ? item.target : '_self'"
-            class="nav-link px-2 link-secondary"
+
+          <li 
+            v-for="(item, index) in navItems.items" :key="index"
           >
-            {{ item.name ? item.name : "link" }}
-          </router-link>
-        </li>
+            <router-link
+              :to="item.link ? item.link : '#'"
+              :class="item.class ? item.class : null"
+              :target="item.target ? item.target : '_self'"
+              class="nav-link px-2 link-secondary"
+            >
+              {{ item.name ? item.name : "link" }}
+            </router-link>
+          </li>
       </ul>
 
       <!-- Category Dropdown -->
@@ -192,40 +194,40 @@ export default {
         data-bs-toggle="dropdown"
         aria-expanded="true"
       >
-        <img
-          src="https://github.com/mdo.png"
-          alt="mdo"
-          width="32"
-          height="32"
-          class="rounded-circle"
-        />
-      </a>
-      <ul
-        class="dropdown-menu text-small"
-        data-popper-placement="bottom-end"
-        style="
-          position: absolute;
-          inset: 0px 0px auto auto;
-          margin: 0px;
-          transform: translate(0px, 34px);
-        "
-      >
-        <li v-for="(item, index) in userNavItems.items" :key="index">
-          <router-link
-            v-if="checkDisplay(item, getIsAuthenticated, getIsAdmin)"
-            :to="item.link ? item.link : '#'"
-            :class="item.class ? item.class : null"
-            :target="item.target ? item.target : '_self'"
-            class="dropdown-item"
-          >
-            {{ item.name ? item.name : "link" }}
-          </router-link>
-        </li>
-        <li><hr class="dropdown-divider" /></li>
-        <li><a class="dropdown-item" href="#">Sign out</a></li>
-      </ul>
+          <img
+            src="https://github.com/mdo.png"
+            alt="mdo"
+            width="32"
+            height="32"
+            class="rounded-circle"
+          />
+        </a>
+        <ul
+          class="dropdown-menu text-small"
+          data-popper-placement="bottom-end"
+          style="
+            position: absolute;
+            inset: 0px 0px auto auto;
+            margin: 0px;
+            transform: translate(0px, 34px);
+          "
+        >
+          <li v-for="(item, index) in userNavItems.items" :key="index">
+            <router-link
+              v-if="checkDisplay(item, getIsAuthenticated, getIsAdmin)"
+              :to="item.link ? item.link : '#'"
+              :class="item.class ? item.class : null"
+              :target="item.target ? item.target : '_self'"
+              class="dropdown-item"
+            >
+              {{ item.name ? item.name : "link" }}
+            </router-link>
+          </li>
+          <li><hr class="dropdown-divider" /></li>
+          <li><a class="dropdown-item" href="/login">Sign out</a></li>
+        </ul>
+      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
