@@ -1,4 +1,4 @@
-<script>
+v-if<script>
 import { mapState, mapActions } from "pinia";
 import { useAppStore, useProductsStore, useCategoryStore } from "@/stores";
 import nav from "@/data/nav.json";
@@ -154,8 +154,10 @@ export default {
       <!-- End Search Bar -->
 
       <!-- Icon Cart -->
+      <!-- <p>{{ store.cart.length }}</p> -->
       <router-link :to="{ name: 'CartView' }">
-        <svg
+          <svg  
+          values= "store.cart.length"
           xmlns="http://www.w3.org/2000/svg"
           width="32"
           height="32"
@@ -254,6 +256,12 @@ export default {
   margin-left: 2rem;
   margin-right: 2rem;
   color: #42b983;
+  content:attr(value);
+  padding:3px;
+  position:relative;
+  left:-8px;
+  top:-10px;
+  opacity:0.9;
 }
 
 .dropdown {
