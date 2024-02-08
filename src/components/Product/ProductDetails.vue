@@ -1,7 +1,7 @@
 <script setup>
 import { toRefs } from "vue";
 import { useRouter } from "vue-router";
-import { useProductsStore } from "@/stores";
+import { useProductsStore, useCartStore } from "@/stores";
 
 const props = defineProps({
   productId: {
@@ -10,11 +10,11 @@ const props = defineProps({
   },
 });
 
-const store = useProductsStore();
+const ProductStore = useProductsStore();
 const router = useRouter();
 const { productId } = toRefs(props);
-const currentProduct = store.getProductById(productId.value);
-const { addToCart } = store;
+const currentProduct = ProductStore.getProductById(productId.value);
+const { addToCart } = useCartStore();
 console.log(productId);
 const vtaCalculation = (price, vta) => {
   if (typeof price != "number") {

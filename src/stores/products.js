@@ -3,11 +3,10 @@ import { defineStore } from "pinia";
 /* import products from "../data/productList.json" */
 /* @ est un raccourcis pour partir du dossier src */
 import products from "@/data/productList.json";
-import {ref} from 'vue';
+import { ref } from "vue";
 
 const STORE_NAME = "products";
 const STORE_LOCALE_STORAGE_KEY = "products";
-
 
 const getDefaultState = () => products;
 const getCurrentState = () => {
@@ -16,13 +15,11 @@ const getCurrentState = () => {
 };
 
 export const useProductsStore = defineStore(STORE_NAME, {
-
   state: () => {
     return {
       products: getCurrentState(),
       editProductMode: false,
       productToEditId: null,
-      cart: [],
       searchTerm: "",
     };
   },
@@ -90,17 +87,7 @@ export const useProductsStore = defineStore(STORE_NAME, {
       this.productToEditId = null;
       this.editProductMode = false;
     },
-    addToCart(product) {
-      const uuid = Math.floor(Math.random() * Date.now());
-      const productToCart = { ...product, uuid };
-      this.cart.push(productToCart);
-    },
-    removeFromCart(productUuid) {
-      this.cart = this.cart.filter((el) => {
-        return el.uuid != productUuid;
-      });
-      console.log(this.cart);
-    },
+
     setSearchTerms(searchTerm) {
       this.searchTerm = searchTerm;
     },
