@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter } from "vue-router";
 import { useCartStore } from "../stores/cart";
+import { watch,onMounted } from "vue";
 
 const router = useRouter();
 const store = useCartStore();
@@ -16,6 +17,7 @@ const vtaCalculation = (price, vta) => {
 const deleteFromCart = (id) => {
   store.removeFromCart(id);
 };
+
 </script>
 
 <template>
@@ -35,7 +37,7 @@ const deleteFromCart = (id) => {
             >{{ item.name }}</span
           >
           <span>{{ item.category }}</span>
-          <span>{{ item.price }}</span>
+          <span>{{ item.qty }}</span>
           <span>
             tva :{{ item.vta }}% - {{ vtaCalculation(item.price, item.vta) }}€
             TTC</span

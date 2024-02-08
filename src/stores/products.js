@@ -34,6 +34,9 @@ export const useProductsStore = defineStore(STORE_NAME, {
       return state.products.find((product) => product.id == id);
     },
     getProductsByCategory: (state) => (category) => {
+      console.log("category : ", state.products.filter((product) => {
+        return product.category === category;
+      }))
       return state.products.filter((product) => {
         return product.category === category;
       })

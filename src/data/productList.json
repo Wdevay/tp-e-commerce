@@ -5,23 +5,26 @@
     "category": "Sweets",
     "description": "Des super Biscuit Trop bon",
     "price": 1,
-    "vta": 20
+    "vta": 20,
+    "url": "https://images.pexels.com/photos/302539/pexels-photo-302539.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
   },
   {
     "id": 2,
-    "name": "Rhum",
+    "name": "Jus de fruit",
     "category": "Beverage",
     "description": "Y'a bon !",
     "price": 10,
-    "vta": 20
+    "vta": 20,
+    "url": "https://images.pexels.com/photos/1337824/pexels-photo-1337824.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
   },
   {
     "id": 3,
-    "name": "Drumstick",
+    "name": "Hotdog",
     "category": "Meat",
     "description": "Y'a bon !",
     "price": 30,
-    "vta": 20
+    "vta": 20,
+    "url": "https://images.pexels.com/photos/12123657/pexels-photo-12123657.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
   },
   {
     "id": 4,
@@ -29,14 +32,16 @@
     "category": "Vegetable",
     "description": "Y'a bon !",
     "price": 5,
-    "vta": 20
+    "vta": 20,
+    "url": "https://images.pexels.com/photos/5187379/pexels-photo-5187379.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
   },
   {
     "id": 5,
-    "name": "Plant",
+    "name": "Borage",
     "category": "Vegetable",
     "description": "Y'a bon !",
     "price": 5,
-    "vta": 20
+    "vta": 20,
+    "url": "https://images.pexels.com/photos/5748828/pexels-photo-5748828.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
   }
 ]

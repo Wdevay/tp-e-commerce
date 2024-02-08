@@ -19,9 +19,7 @@ export default {
     
     <router-view v-slot="{ Component }">
       <transition name="slide-fade">
-        <KeepAlive>
           <component :is="Component" />
-        </KeepAlive>
       </transition>
     </router-view>
 

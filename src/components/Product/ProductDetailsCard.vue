@@ -22,7 +22,32 @@ export default {
 </script>
 
 <template>
-  <article 
+  <div class="card mb-3" style="max-width: 540px;">
+  <div class="row g-0">
+    <div class="col-md-4">
+      <img :src=product.url class="img-fluid rounded-start" alt="{{ product.name }}">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h3 class="card-title">{{ product.name }}</h3>
+        <p class="text-muted">{{ product.category }}</p>
+        <p class="card-text">{{ product.price }}€</p>
+        <p class="text-muted">
+            tva :{{ product.vta }}% -
+            {{ vtaCalculation(product.price, product.vta) }}€
+            TTC
+        </p>
+        <router-link
+          :to="{name: 'ProductDetailsPage', params: {id: product.id}}"
+          class="btn btn-primary"
+        >
+          Voir L'article
+        </router-link>
+      </div>
+    </div>
+  </div>
+</div>
+  <!-- <article 
     class="col-sm-6 mb-3 mb-sm-0" 
   >
       <div class="card">
@@ -44,5 +69,5 @@ export default {
           </router-link>
         </section>
       </div>
-  </article>
+  </article> -->
 </template>

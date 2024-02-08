@@ -1,5 +1,5 @@
 <script setup>
-import { toRefs } from "vue";
+import { toRefs, ref } from "vue";
 import { useRouter } from "vue-router";
 import { useProductsStore, useCartStore } from "@/stores";
 
@@ -9,11 +9,11 @@ const props = defineProps({
     default: null,
   },
 });
-
+const qty = ref(1);
 const ProductStore = useProductsStore();
 const router = useRouter();
 const { productId } = toRefs(props);
-const currentProduct = ProductStore.getProductById(productId.value);
+const currentProduct = {...ProductStore.getProductById(productId.value),qty};
 const { addToCart } = useCartStore();
 console.log(productId);
 const vtaCalculation = (price, vta) => {
@@ -26,6 +26,7 @@ const vtaCalculation = (price, vta) => {
 };
 
 const addToCartAndPush = () => {
+  console.log(currentProduct)
   addToCart(currentProduct);
   router.push({ name: "CartView" });
 };
@@ -35,7 +36,7 @@ const addToCartAndPush = () => {
     <article class="row">
       <section class="col-lg-6">
         <img
-          src="http://via.placeholder.com/640x360.jpg"
+          :src=currentProduct.url
           class="img-fluid"
           alt="Product Image"
         />
@@ -48,13 +49,14 @@ const addToCartAndPush = () => {
           tva :{{ currentProduct.vta }}% -
           {{ vtaCalculation(currentProduct.price, currentProduct.vta) }}€ TTC
         </p>
-        <p class="mb-4">A mini Description</p>
+        <p class="mb-4">{{ currentProduct.description }}</p>
         <div class="d-flex gap-3 mb-4">
           <input
             type="number"
             class="form-control"
             value="1"
             style="max-width: 80px"
+            v-model="currentProduct.qty"
           />
           <button
             class="btn btn-primary"
