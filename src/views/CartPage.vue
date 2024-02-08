@@ -1,9 +1,10 @@
 <script setup>
 import { useRouter } from "vue-router";
-import { useProductsStore } from "../stores/products";
+import { useCartStore } from "../stores/cart";
 
 const router = useRouter();
-const store = useProductsStore();
+const store = useCartStore();
+const carts = store.carts;
 const vtaCalculation = (price, vta) => {
   if (typeof price != "number") {
     /* throw new Error('Parameter is not a number!') */
@@ -19,14 +20,19 @@ const deleteFromCart = (id) => {
 
 <template>
   <section>
-    <p>Items in Cart: {{ store.cart.length }}</p>
-    <button class="btn btn-lg btn-success text-center" @click="router.push({ name: 'CategoryPage' })">Back to category</button>
-    <div v-if="!store.cart.length" style="text-align: center">
+    <!-- <p>Items in Cart: {{ carts.value.length }}</p> -->
+    <button
+      class="btn btn-lg btn-success text-center"
+      @click="router.push({ name: 'CategoryPage' })"
+    >
+      Back to category
+    </button>
+    <div v-if="!store.carts.length" style="text-align: center">
       <h1>Empty Cart...</h1>
     </div>
     <div class="cart-items" v-else="">
-      <div class="cart-item" v-for="item in store.cart" :key="item.id">
-        <br>
+      <div class="cart-item" v-for="item in store.carts" :key="item.id">
+        <br />
         <div class="item-details">
           <span
             @click="router.push({ name: 'ProductListPage' })"
@@ -75,6 +81,4 @@ const deleteFromCart = (id) => {
   cursor: pointer;
   color: #ffbf00;
 }
-
-
 </style>
