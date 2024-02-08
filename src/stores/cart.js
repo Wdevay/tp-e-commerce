@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
-import { ref, onMounted, computed, watch } from "vue";
-import { useProductsStore } from "./products";
+import { ref} from "vue";
 
 const STORE_NAME = "cart";
 const STORE_LOCALE_STORAGE_KEY = "carts";
@@ -13,8 +12,6 @@ const getCurrentState = () => {
 };
 
 export const useCartStore = defineStore(STORE_NAME, () => {
-  const store = useProductsStore();
-  const products = store.products;
   const carts = ref(getCurrentState());
   function updateLocaleStorage() {
     localStorage.setItem(STORE_LOCALE_STORAGE_KEY, JSON.stringify(carts.value));

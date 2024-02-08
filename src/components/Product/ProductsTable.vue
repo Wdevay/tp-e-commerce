@@ -56,6 +56,7 @@ export default {
         <table class="table">
             <thead>
                 <tr>
+                    <th scope="col">Image</th>
                     <th scope="col">Name</th>
                     <th scope="col">Category</th>
                     <th scope="col">Description</th>
@@ -70,6 +71,9 @@ export default {
                     v-for="item in getProducts"
                     :key="item.id"
                 >
+                    <td>
+                        <img class="img-fluid rounded-start" :src=item.url alt={{item.name}}/>
+                    </td>
                     <td>
                         <router-link
                             :to="{name: 'ProductDetailsPage', params: {id: item.id}}"

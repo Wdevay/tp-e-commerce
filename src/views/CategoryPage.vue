@@ -12,7 +12,6 @@ export default {
   },
   mounted() {
     this.activeCategory = this.getCategoryByName(this.$route.params.categoryName)
-    console.log(this.activeCategory)
   },
   components: {
     ProductDetailsCard,
@@ -25,19 +24,20 @@ export default {
 </script>
 <template>
   <section>
-    <h2>{{ $route.params.categoryName }}</h2>
+    <h2 style="margin-bottom: 30px;">{{ $route.params.categoryName }}</h2>
     <div
       v-for="product in getProductsByCategory($route.params.categoryName)"
       class="product-list"
     >
       <product-details-card
-      v-if="product != null"
+      v-if="!product.length"
       :key="product.id"
       :product="product"
       class="product"
       />
+      
       <div v-else>
-        <h3>Cette categorie n'existe pas</h3>
+        <h3>Cette categorie n'a pas d'articles</h3>
       </div>
   </div>
   </section>
