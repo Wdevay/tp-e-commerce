@@ -1,11 +1,59 @@
-<script setup></script>
+<script>
+import { mapState } from "pinia";
+import { useProductsStore, useCategoryStore } from "@/stores";
+import { ProductDetailsCard } from "@/components";
+
+export default {
+  name: "ProductListPage",
+  data() {
+    return {
+      activeCategory: null,
+    }
+  },
+  mounted() {
+    this.activeCategory = this.getCategoryByName(this.$route.params.categoryName)
+    console.log(this.activeCategory)
+  },
+  components: {
+    ProductDetailsCard,
+  },
+  computed: {
+    ...mapState(useProductsStore, ["getProductsByCategory"]),
+    ...mapState(useCategoryStore, ["getCategoryByName"]),
+  },
+};
+</script>
 <template>
-  <p>
-    Category Page
-    <!-- <div class="selected-products">
-          <div v-for="(product, index) in getFilteredProducts" :key="index">
-            {{ product.name }}
-          </div>
-        </div> -->
-  </p>
+  <section>
+    <h2>{{ $route.params.categoryName }}</h2>
+    <div
+      v-for="product in getProductsByCategory($route.params.categoryName)"
+      class="product-list"
+    >
+      <product-details-card
+      v-if="product != null"
+      :key="product.id"
+      :product="product"
+      class="product"
+      />
+      <div v-else>
+        <h3>Cette categorie n'existe pas</h3>
+      </div>
+  </div>
+  </section>
 </template>
+
+<style scoped>
+.product-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.product {
+  flex-basis: 28%;
+  margin: 8px;
+  padding: 16px;
+  box-shadow: 0px 0px 14px 1px;
+  cursor: pointer;
+}
+</style>

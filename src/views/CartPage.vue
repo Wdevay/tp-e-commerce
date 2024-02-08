@@ -20,7 +20,7 @@ const deleteFromCart = (id) => {
 <template>
   <section>
     <p>Items in Cart: {{ store.cart.length }}</p>
-    <button class="btn btn-lg btn-success text-center" @click="router.push({ name: 'CategoryPage' })">Back to category</button>
+    <button class="btn btn-lg btn-success text-center" @click="router.push({ name: 'ProductListPage' })">Back to Product List</button>
     <div v-if="!store.cart.length" style="text-align: center">
       <h1>Empty Cart...</h1>
     </div>
@@ -29,7 +29,7 @@ const deleteFromCart = (id) => {
         <br>
         <div class="item-details">
           <span
-            @click="router.push({ name: 'ProductListPage' })"
+            @click="router.push({name: 'ProductDetailsPage', params: {id: item.id}})"
             class="cart-item-name"
             >{{ item.name }}</span
           >

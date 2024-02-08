@@ -1,6 +1,5 @@
 <script setup>
-import {ref, onMounted, computed, watch } from "vue";
-import { useCategoryStore } from "@/stores/category";
+import { useCategoryStore } from "@/stores";
 import { storeToRefs } from 'pinia';
 
 
@@ -9,16 +8,6 @@ const storage = useCategoryStore()
 
 const { categories, input_category } = storeToRefs(storage)
 const { addCategory, removeCategory, updateLocaleStorage } = storage
-
-
-// watch(cate.value, (newVal) => {
-//   localStorage.setItem('categories',JSON.stringify(newVal))
-// })
-
-
-// onMounted(() => {
-//   cate.value = JSON.parse(localStorage.getItem('categories')) || []
-// })
 
 
 </script>

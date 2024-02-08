@@ -1,16 +1,14 @@
 <script>
 import { mapState, mapActions } from "pinia";
-import { useAppStore, useProductsStore } from "@/stores";
-import { useCategoryStore } from "../../stores/category";
+import { useAppStore, useProductsStore, useCategoryStore } from "@/stores";
 import nav from "@/data/nav.json";
-import categories from "@/data/categoryList.json";
+
 
 export default {
   name: "MainNav",
   data() {
     return {
       searchTerm: "",
-      categories,
     };
   },
   watch: {
@@ -46,7 +44,7 @@ export default {
   computed: {
     ...mapState(useAppStore, ["getIsAuthenticated", "getIsAdmin"]),
     ...mapState(useProductsStore, ["getSearchTerm", "getFilteredProducts"]),
-    ...mapState(useCategoryStore, ["selectCategory"]),
+    ...mapState(useCategoryStore, ["selectCategory", "activeCategory","categories"]),
     checkDisplay:
       () =>
       (link, isAuth = false, isAdmin = false) => {
@@ -57,13 +55,9 @@ export default {
           return false;
         }
         return true;
-      },
-    selectCategoryAndProducts: (category) => {
-      // console.log(categories);
-      const list = selectCategory(category.name);
-      // console.log(list);
-    },
+      }, 
   },
+
 
   methods: {
     ...mapActions(useProductsStore, ["setSearchTerms"]),
@@ -120,7 +114,7 @@ export default {
       </ul>
 
       <!-- Category Dropdown -->
-      <div v-if="this.$route.path === '/products'" />
+      <!-- <div v-if="this.$route.path === '/products'" /> -->
       <div class="dropdown">
         <button
           id="dropdown-toggle"
@@ -134,10 +128,13 @@ export default {
         <ul class="dropdown-menu">
           <li
             v-for="(category) in categories"
-            :class="{ active: activeCategory === category }"
-            @click="selectCategoryAndProducts(category)"
           >
-            {{ category.name }}
+            <router-link
+              :to="{ name: 'CategoryPage', params: { categoryName: category.name }}"
+              class="dropdown-item"
+            >
+              {{ category.name }}
+             </router-link> 
           </li>
         </ul>
       </div>
@@ -263,7 +260,7 @@ export default {
 }
 
 .dropdown {
-  margin-right: 10rem;
+  margin-right: 15rem;
 }
 
 .container {

@@ -27,7 +27,7 @@ export default {
     >
       Retour à l'administration
     </button>
-    <router-link to="/products" class="btn btn-lg text-center">
+    <router-link to="/products" class="btn btn-lg btn-info text-center" style="margin: 20px 0 20px 0;">
       Retour à la Liste
     </router-link>
     <section class="col-12">

@@ -41,7 +41,7 @@
   {
     "uuid": "category_page",
     "name": "CategoryPage",
-    "path": "/category",
+    "path": "/category/:categoryName",
     "component": "CategoryPage.vue"
   }
 ]

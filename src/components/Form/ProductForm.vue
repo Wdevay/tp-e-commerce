@@ -1,6 +1,6 @@
 <script>
 import { mapState, mapActions } from "pinia";
-import { useProductsStore } from "../../stores";
+import { useProductsStore, useCategoryStore } from "@/stores";
 
 
 
@@ -110,6 +110,7 @@ export default {
       "getProductToEditId",
       "getProductById",
     ]),
+    ...mapState(useCategoryStore, ["categories"]),
   },
 };
 </script>
@@ -161,17 +162,17 @@ export default {
       <div class="mb-3">
         <label for="category" class="form-label">Catégorie</label>
         <select id="category" class="form-select" v-model="category" required>
-          <!-- <option
+          <option
             v-for="category in categories"
             :key="category.id"
             :value="category.name"
           >
             {{ category.name }}
-          </option> -->
-          <option value="meat">Viande</option>
+          </option>
+          <!-- <option value="meat">Viande</option>
           <option value="vegetable">Légume</option>
           <option value="drink">Boisson</option>
-          <option value="sweet">Confiserie</option>
+          <option value="sweet">Confiserie</option> -->
         </select>
       </div>
       <div class="mb-3">
