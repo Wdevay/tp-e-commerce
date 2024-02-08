@@ -89,6 +89,7 @@ export default {
         href="/"
         class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none"
       >
+      <div class="logo">
         <svg
           class="bi me-2"
           width="40"
@@ -98,6 +99,7 @@ export default {
         >
           <use xlink:href="#bootstrap"></use>
         </svg>
+      </div>
       </a>
       <ul
         class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0"
@@ -143,6 +145,7 @@ export default {
 
       <!-- Search Bar -->
       <!-- .prevent表示提交以后不刷新页面,submit点击默认行为是提交表单,这里并不需要它提交,只需要执行runSearchMode方法,故阻止为好。 -->
+      <div class="container">
       <form @submit.prevent="runSearchMode()" class="search" role="search">
         <input
           type="text"
@@ -153,6 +156,7 @@ export default {
           @input="() => runSearchMode()"
         />
       </form>
+    </div>
       <!-- End Search Bar -->
 
       <!-- Icon Cart -->
@@ -257,4 +261,27 @@ export default {
   margin-right: 2rem;
   color: #42b983;
 }
+
+.dropdown {
+  margin-right: 10rem;
+}
+
+.container {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  border-color: #42b983;
+}
+
+a{
+  text-decoration: none;
+  color: #ffbf00;
+}
+/* esaaie logo à gauche 
+.logo {
+  display: flex;
+  align-items: end;
+  justify-content: flex-end;
+} */
 </style>

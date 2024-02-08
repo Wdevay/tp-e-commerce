@@ -26,6 +26,7 @@ const deleteFromCart = (id) => {
     </div>
     <div class="cart-items" v-else="">
       <div class="cart-item" v-for="item in store.cart" :key="item.id">
+        <br>
         <div class="item-details">
           <span
             @click="router.push({ name: 'ProductListPage' })"
@@ -74,4 +75,6 @@ const deleteFromCart = (id) => {
   cursor: pointer;
   color: #ffbf00;
 }
+
+
 </style>

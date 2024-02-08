@@ -71,4 +71,5 @@ export default {
 .slide-fade-leave-to {
   display: none;
 }
+
 </style>
