@@ -204,9 +204,9 @@ export default {
     color: #42b983;
 }
 
-.dropdown {
-    /* margin-right: 15rem; */
-}
+/* .dropdown {
+     margin-right: 15rem;
+} */
 
 .container {
     display: flex;
@@ -218,7 +218,7 @@ export default {
 
 a {
     text-decoration: none;
-    color: #ffbf00;
+    color: #333;
 }
 
 #nav-cart-count {
