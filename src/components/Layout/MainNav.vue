@@ -103,7 +103,7 @@ export default {
                     Categories
                 </button>
                 <ul class="dropdown-menu">
-                    <li v-for="(category) in categories" :key="category.id">
+                    <li v-for="(category) in categories">
                         <router-link :to="{ name: 'CategoryPage', params: { categoryName: category.name } }"
                             class="dropdown-item">
                             {{ category.name }}
